@@ -1,0 +1,22 @@
+curl -X POST https://dashscope.aliyuncs.com/compatible-mode/v1/files \
+-H "Authorization: Bearer $DASHSCOPE_API_KEY" \
+--form 'file=@"test.txt"' \
+--form 'purpose="file-extract"'
+
+
+
+curl -X POST https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation \
+-H "Authorization: Bearer $DASHSCOPE_API_KEY" \
+-H "Content-Type: application/json" \
+-d '{
+    "model": "qwen-long",
+    "input": {
+        "messages": [
+            {"role": "system","content": "fileid://file-fe-xxx"},
+            {"role": "user","content": "这篇文章讲了什么？"}
+        ]
+    },
+    "parameters": {
+        "result_format": "message"
+    }
+}'
